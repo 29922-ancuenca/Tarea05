@@ -48,7 +48,7 @@ namespace _02_MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Name")] AspNetRoles aspNetRoles)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid)//hola
             {
                 db.AspNetRoles.Add(aspNetRoles);
                 db.SaveChanges();
