@@ -1,0 +1,64 @@
+﻿@model IEnumerable<_02_MVC.Models.Paciente>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Cedula
+        </th>
+        <th>
+            Nombre
+        </th>
+        <th>
+            Fecha de Nacimiento
+        </th>
+        <th>
+            Peso
+        </th>
+        <th>
+            Altura
+        </th>
+        <th>
+            Foto
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.cedula)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nombre)
+        </td>
+        <td>
+            @String.Format("{0:dd/MM/yyyy}", item.fechaNacimiento)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.peso)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.altura)
+        </td>
+        <td>
+            <img src="@Url.Content("~/Usuarios/" + item.foto)" width="100px" />
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.codPaciente }) |
+            @Html.ActionLink("Details", "Details", new { id=item.codPaciente }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.codPaciente })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,83 @@
+﻿@model _02_MVC.Models.Paciente
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>Paciente</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.codPaciente)
+
+    <div class="form-group">
+        <strong>Cedula</strong>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.cedula, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.cedula, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <strong>Nombre</strong>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <strong>Fecha de Nacimiento</strong>
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.fechaNacimiento, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+            @Html.ValidationMessageFor(model => model.fechaNacimiento, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <strong>Peso</strong>
+        <div class="col-md-10">
+            @Html.TextBox("PesoTexto", Model.peso, new { @class = "form-control", type = "number", step = "0.01", min = "0" })
+            @Html.ValidationMessage("peso", "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <strong>Altura</strong>
+        <div class="col-md-10">
+            @Html.TextBox("AlturaTexto", Model.altura, new { @class = "form-control", type = "number", step = "0.01", min = "0" })
+            @Html.ValidationMessage("altura", "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <strong>Foto</strong>
+        <div class="col-md-10">
+            <input type="file" name="archivoFoto" class="form-control" accept="image/*" />
+            @Html.ValidationMessageFor(model => model.foto, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

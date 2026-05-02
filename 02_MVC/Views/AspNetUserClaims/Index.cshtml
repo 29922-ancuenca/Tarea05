@@ -1,0 +1,67 @@
+﻿@model IEnumerable<_02_MVC.Models.AspNetUserClaims>
+
+@{
+    ViewBag.Title = "Gestión de Permisos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    string rol = ViewBag.RolNombre as string;
+}
+
+<h2>Gestión de Permisos</h2>
+<h4>Rol: <span style="color:blue">@rol</span></h4>
+
+<p>Configure los permisos CRUD para cada módulo del sistema</p>
+
+<hr />
+
+<div class="alert alert-info">
+    <strong>Instrucciones:</strong> Activa/desactiva los switches para otorgar o revocar permisos.
+</div>
+
+@using (Html.BeginForm("GuardarPermisos", "AspNetRoles", FormMethod.Post))
+{
+    <input type="hidden" name="rolId" value="@ViewBag.RolId" />
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Módulos</th>
+                <th>Crear</th>
+                <th>Leer</th>
+                <th>Editar</th>
+                <th>Eliminar</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <!-- PACIENTES -->
+            <tr>
+                <td>Pacientes</td>
+
+                <td><input type="checkbox" name="Paciente_Create" @(Model.Any(c => c.ClaimType == "Permission.Pacientes.Create") ? "checked" : "") /></td>
+
+                <td><input type="checkbox" name="Paciente_Read" @(Model.Any(c => c.ClaimType == "Permission.Pacientes.Read") ? "checked" : "") /></td>
+
+                <td><input type="checkbox" name="Paciente_Update" @(Model.Any(c => c.ClaimType == "Permission.Pacientes.Update") ? "checked" : "") /></td>
+
+                <td><input type="checkbox" name="Paciente_Delete" @(Model.Any(c => c.ClaimType == "Permission.Pacientes.Delete") ? "checked" : "") /></td>
+            </tr>
+
+            <!-- MEDICOS -->
+            <tr>
+                <td>Médicos</td>
+
+                <td><input type="checkbox" name="Medico_Create" @(Model.Any(c => c.ClaimType == "Permission.Medicos.Create") ? "checked" : "") /></td>
+
+                <td><input type="checkbox" name="Medico_Read" @(Model.Any(c => c.ClaimType == "Permission.Medicos.Read") ? "checked" : "") /></td>
+
+                <td><input type="checkbox" name="Medico_Update" @(Model.Any(c => c.ClaimType == "Permission.Medicos.Update") ? "checked" : "") /></td>
+
+                <td><input type="checkbox" name="Medico_Delete" @(Model.Any(c => c.ClaimType == "Permission.Medicos.Delete") ? "checked" : "") /></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button type="submit" class="btn btn-success">Guardar Cambios</button>
+    <a href="@Url.Action("Index")" class="btn btn-secondary">Cancelar</a>
+}

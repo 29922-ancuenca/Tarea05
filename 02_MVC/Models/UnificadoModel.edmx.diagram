@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f46b8e278e5d4b4c9391a6d9cef3f4d6" Name="Diagram1" ZoomLevel="70">
+        <EntityTypeShape EntityType="UnificadaBDModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="UnificadaBDModel.AspNetRoles" Width="1.5" PointX="9.5" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="UnificadaBDModel.AspNetUserClaims" Width="1.5" PointX="14.25" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="UnificadaBDModel.AspNetUserLogins" Width="1.5" PointX="14" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="UnificadaBDModel.AspNetUsers" Width="1.5" PointX="11.625" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="UnificadaBDModel.Ciudad" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="UnificadaBDModel.Clinica" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="UnificadaBDModel.Consulta" Width="1.5" PointX="7.5" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="UnificadaBDModel.Especialidad" Width="1.5" PointX="1.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="UnificadaBDModel.Examen" Width="1.5" PointX="3.375" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="UnificadaBDModel.Medicamento" Width="1.5" PointX="9.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="UnificadaBDModel.Medico" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="UnificadaBDModel.Paciente" Width="1.5" PointX="5.875" PointY="4.875" IsExpanded="true" />
+        <AssociationConnector Association="UnificadaBDModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="UnificadaBDModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="UnificadaBDModel.FK__Clinica__codCiud__571DF1D5" ManuallyRouted="false" />
+        <AssociationConnector Association="UnificadaBDModel.FK__Medico__codClini__5DCAEF64" ManuallyRouted="false" />
+        <AssociationConnector Association="UnificadaBDModel.FK__Consulta__codMed__5812160E" ManuallyRouted="false" />
+        <AssociationConnector Association="UnificadaBDModel.FK__Consulta__codPac__38996AB5" ManuallyRouted="false" />
+        <AssociationConnector Association="UnificadaBDModel.FK__Medico__codEspec__5EBF139D" ManuallyRouted="false" />
+        <AssociationConnector Association="UnificadaBDModel.AspNetUserRoles" ManuallyRouted="false" />
+        <AssociationConnector Association="UnificadaBDModel.ConsultaExamen" ManuallyRouted="false" />
+        <AssociationConnector Association="UnificadaBDModel.ConsultaMedicamento" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
