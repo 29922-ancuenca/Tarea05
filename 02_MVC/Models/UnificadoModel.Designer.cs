@@ -1,4 +1,4 @@
-﻿// La generación de código T4 está habilitada para el modelo 'E:\Web3\Temp\PRIMER PARCIAL\15_Tarea05\02_MVC\Models\UnificadoModel.edmx'. 
+﻿// La generación de código T4 está habilitada para el modelo 'C:\Users\Acer\Downloads\Tarea05\02_MVC\Models\UnificadoModel.edmx'. 
 // Para habilitar la generación de código heredada, cambie el valor de la propiedad del diseñador 'Estrategia de generación de código'
 // por 'ObjectContext heredado'. Esta propiedad está disponible en la ventana Propiedades cuando se abre
 // el modelo en el diseñador.

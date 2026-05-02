@@ -1,20 +1,33 @@
 ﻿@model IEnumerable<_02_MVC.Models.AspNetRoles>
 
 @{
-    ViewBag.Title = "Gestión de Roles";
+    ViewBag.Title = (User != null && User.Identity != null && User.Identity.IsAuthenticated && User.Identity.Name != "SuperAdmin")
+        ? "Ver Roles"
+        : "Gestión de Roles";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="container mt-4">
 
     <div class="text-center mb-4">
-        <h1><strong>Gestión de Roles</strong></h1>
-        <p class="text-muted">Administra los roles del sistema clínico</p>
+        @if (User.Identity.Name == "SuperAdmin")
+        {
+            <h1><strong>Gestión de Roles</strong></h1>
+            <p class="text-muted">Administra los roles del sistema clínico</p>
+        }
+        else
+        {
+            <h1><strong>Ver Roles</strong></h1>
+            <p class="text-muted">Roles asignados a tu usuario</p>
+        }
     </div>
 
-    <div class="text-right mb-3">
-        @Html.ActionLink("✚ Crear Rol", "Create", null, new { @class = "btn btn-success" })
-    </div>
+    @if (User.Identity.Name == "SuperAdmin")
+    {
+        <div class="text-right mb-3">
+            @Html.ActionLink("✚ Crear Rol", "Create", null, new { @class = "btn btn-success" })
+        </div>
+    }
 
     <div class="card shadow-sm p-3">
         <table class="table table-hover">
@@ -26,22 +39,49 @@
             </thead>
 
             <tbody>
-                @foreach (var item in Model)
+                @if (User.Identity.Name == "SuperAdmin")
                 {
-                    <tr>
-                        <td>
-                            <strong>@item.Name</strong><br />
-                            <small class="text-muted">ID: @item.Id</small>
-                        </td>
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <strong>@item.Name</strong><br />
+                                <small class="text-muted">ID: @item.Id</small>
+                            </td>
 
-                        <td class="text-center">
-                            @Html.ActionLink("✏ Editar", "Edit", new { id = item.Id }, new { @class = "btn btn-outline-info btn-sm" })
-
-                            @Html.ActionLink("🔎 Detalle", "Details", new { id = item.Id }, new { @class = "btn btn-outline-secondary btn-sm" })
-
-                            @Html.ActionLink("🗑 Eliminar", "Delete", new { id = item.Id }, new { @class = "btn btn-outline-danger btn-sm" })
-                        </td>
-                    </tr>
+                            <td class="text-center">
+                                @Html.ActionLink("✏ Editar", "Edit", new { id = item.Id }, new { @class = "btn btn-outline-info btn-sm" })
+                                @Html.ActionLink("🔎 Detalle", "Details", new { id = item.Id }, new { @class = "btn btn-outline-secondary btn-sm" })
+                                @Html.ActionLink("🗑 Eliminar", "Delete", new { id = item.Id }, new { @class = "btn btn-outline-danger btn-sm" })
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    var rolesAsignados = Model.Where(r => User.IsInRole(r.Name)).ToList();
+                    if (!rolesAsignados.Any())
+                    {
+                        <tr>
+                            <td colspan="2" class="text-center text-muted">
+                                No tienes roles asignados.
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var item in rolesAsignados)
+                        {
+                            <tr>
+                                <td>
+                                    <strong>@item.Name</strong>
+                                </td>
+                                <td class="text-center">
+                                    @Html.ActionLink("🔎 Detalle", "Details", new { id = item.Id }, new { @class = "btn btn-outline-secondary btn-sm" })
+                                </td>
+                            </tr>
+                        }
+                    }
                 }
             </tbody>
         </table>

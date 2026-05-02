@@ -83,4 +83,22 @@ namespace _02_MVC.Models
         public string SelectedProvider { get; set; }
         public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
     }
+
+    public class RolePermissionsViewModel
+    {
+        [Required]
+        public string RolId { get; set; }
+
+        public string RolNombre { get; set; }
+
+        public bool Pacientes_Create { get; set; }
+        public bool Pacientes_Read { get; set; }
+        public bool Pacientes_Update { get; set; }
+        public bool Pacientes_Delete { get; set; }
+
+        public bool Medicos_Create { get; set; }
+        public bool Medicos_Read { get; set; }
+        public bool Medicos_Update { get; set; }
+        public bool Medicos_Delete { get; set; }
+    }
 }

@@ -34,6 +34,7 @@ namespace _02_MVC
             CrearAdministrador(db);
             CrearGerente(db);
             AsignarPermisos(db);
+            AsignarRolesTipoUsuario(db);
 
             db.Dispose();
         }
@@ -41,6 +42,20 @@ namespace _02_MVC
         private void CrearRoles(ApplicationDbContext db)
         {
             var rolemanager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
+
+            // Roles de tipo de usuario
+            if (!rolemanager.RoleExists("Medico"))
+            {
+                rolemanager.Create(new IdentityRole("Medico"));
+            }
+            if (!rolemanager.RoleExists("Paciente"))
+            {
+                rolemanager.Create(new IdentityRole("Paciente"));
+            }
+            if (!rolemanager.RoleExists("Administrador"))
+            {
+                rolemanager.Create(new IdentityRole("Administrador"));
+            }
 
             if (!rolemanager.RoleExists("view"))
             {
@@ -150,6 +165,30 @@ namespace _02_MVC
 
                 if (!usermanager.IsInRole(administrador.Id, "delete"))
                     usermanager.AddToRole(administrador.Id, "delete");
+            }
+        }
+
+        private void AsignarRolesTipoUsuario(ApplicationDbContext db)
+        {
+            var usermanager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+
+            // Usuarios de ejemplo (según las indicaciones del proyecto)
+            AsignarRolSiExiste(usermanager, "MANOTAS", "Medico");
+            AsignarRolSiExiste(usermanager, "PEPITO", "Paciente");
+            AsignarRolSiExiste(usermanager, "PLUTARCO", "Administrador");
+        }
+
+        private void AsignarRolSiExiste(UserManager<ApplicationUser> usermanager, string userName, string roleName)
+        {
+            var user = usermanager.FindByName(userName);
+            if (user == null)
+            {
+                return;
+            }
+
+            if (!usermanager.IsInRole(user.Id, roleName))
+            {
+                usermanager.AddToRole(user.Id, roleName);
             }
         }
 

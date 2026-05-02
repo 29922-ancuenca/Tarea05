@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using _02_MVC.Models;
+using _02_MVC.Infrastructure;
 
 namespace _02_MVC.Controllers
 {
@@ -15,12 +16,14 @@ namespace _02_MVC.Controllers
         private UnificadaBDEntities db = new UnificadaBDEntities();
 
         // GET: Paciente
+        [PermissionAuthorize("Pacientes", "Read")]
         public ActionResult Index()
         {
             return View(db.Paciente.ToList());
         }
 
         // GET: Paciente/Details/5
+        [PermissionAuthorize("Pacientes", "Read")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,7 +39,7 @@ namespace _02_MVC.Controllers
         }
 
         // GET: Paciente/Create
-        [Authorize(Roles = "create")]
+        [PermissionAuthorize("Pacientes", "Create")]
         public ActionResult Create()
         {
             return View(new Paciente());
@@ -48,7 +51,7 @@ namespace _02_MVC.Controllers
         // POST: Paciente/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "create")]
+        [PermissionAuthorize("Pacientes", "Create")]
         public ActionResult Create([Bind(Include = "codPaciente,cedula,nombre,fechaNacimiento,foto")] Paciente paciente, string PesoTexto, string AlturaTexto)
         {
             ModelState.Remove("peso");
@@ -75,7 +78,7 @@ namespace _02_MVC.Controllers
         }
 
         // GET: Paciente/Edit/5
-        [Authorize(Roles = "edit")]
+        [PermissionAuthorize("Pacientes", "Update")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -96,7 +99,7 @@ namespace _02_MVC.Controllers
         // POST: Paciente/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "edit")]
+        [PermissionAuthorize("Pacientes", "Update")]
         public ActionResult Edit([Bind(Include = "codPaciente,cedula,nombre,fechaNacimiento,foto")] Paciente paciente, string PesoTexto, string AlturaTexto)
         {
             // Quitar validación automática de esos campos
@@ -125,7 +128,7 @@ namespace _02_MVC.Controllers
         }
 
         // GET: Paciente/Delete/5
-        [Authorize(Roles = "delete")]
+        [PermissionAuthorize("Pacientes", "Delete")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -143,7 +146,7 @@ namespace _02_MVC.Controllers
         // POST: Paciente/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "delete")]
+        [PermissionAuthorize("Pacientes", "Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
             Paciente paciente = db.Paciente.Find(id);

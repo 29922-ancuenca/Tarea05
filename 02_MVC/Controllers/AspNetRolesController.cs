@@ -4,9 +4,11 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System;
 using System.Web;
 using System.Web.Mvc;
 using _02_MVC.Models;
+using System.Data.Entity.Validation;
 
 namespace _02_MVC.Controllers
 {
@@ -38,7 +40,7 @@ namespace _02_MVC.Controllers
         // GET: AspNetRoles/Create
         public ActionResult Create()
         {
-            return View();
+          return View(new AspNetRoles());
         }
 
         // POST: AspNetRoles/Create
@@ -50,9 +52,50 @@ namespace _02_MVC.Controllers
         {
             if (ModelState.IsValid)//hola
             {
+                if (aspNetRoles == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+
+                aspNetRoles.Name = (aspNetRoles.Name ?? string.Empty).Trim();
+                if (string.IsNullOrWhiteSpace(aspNetRoles.Name))
+                {
+                    ModelState.AddModelError("Name", "El nombre del rol es obligatorio.");
+                    return View(aspNetRoles);
+                }
+
+                // Evitar duplicados por nombre
+                var exists = db.AspNetRoles.Any(r => r.Name == aspNetRoles.Name);
+                if (exists)
+                {
+                    ModelState.AddModelError("Name", "Ya existe un rol con ese nombre.");
+                    return View(aspNetRoles);
+                }
+
+                // La tabla AspNetRoles requiere Id (string). Si no viene del formulario, generarlo.
+                if (string.IsNullOrWhiteSpace(aspNetRoles.Id))
+                {
+                    aspNetRoles.Id = Guid.NewGuid().ToString();
+                }
+
                 db.AspNetRoles.Add(aspNetRoles);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+               try
+                {
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    foreach (var eve in ex.EntityValidationErrors)
+                    {
+                        foreach (var ve in eve.ValidationErrors)
+                        {
+                            ModelState.AddModelError("", ve.ErrorMessage);
+                        }
+                    }
+
+                    return View(aspNetRoles);
+                }
             }
 
             return View(aspNetRoles);

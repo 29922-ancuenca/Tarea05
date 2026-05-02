@@ -1,0 +1,32 @@
+@{
+    ViewBag.Title = "Acceso denegado";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var modulo = ViewBag.ForbiddenModule as string;
+    var accion = ViewBag.ForbiddenAction as string;
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h2 class="mb-3">Acceso denegado (403)</h2>
+            <p class="text-muted">
+                No tienes permisos para acceder a esta acción.
+            </p>
+
+            @if (!string.IsNullOrWhiteSpace(modulo) && !string.IsNullOrWhiteSpace(accion))
+            {
+                <p>
+                    <strong>Módulo:</strong> @modulo<br />
+                    <strong>Acción:</strong> @accion
+                </p>
+            }
+
+            <hr />
+            <div class="d-flex gap-2">
+                <a class="btn btn-secondary" href="javascript:history.back()">Volver</a>
+                <a class="btn btn-primary" href="@Url.Action("Index", "Home")">Ir al Inicio</a>
+            </div>
+        </div>
+    </div>
+</div>

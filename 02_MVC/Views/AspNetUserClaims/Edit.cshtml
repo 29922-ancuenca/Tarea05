@@ -1,59 +1,63 @@
-﻿@model _02_MVC.Models.AspNetUserClaims
+﻿@model _02_MVC.Models.RolePermissionsViewModel
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Gestión de Permisos";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit</h2>
-
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>AspNetUserClaims</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.UserId, "UserId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("UserId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ClaimType, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ClaimType, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ClaimType, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ClaimValue, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ClaimValue, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ClaimValue, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
+<div class="container mt-4">
+    <div class="text-center mb-3">
+        <h1><strong>Gestión de Permisos</strong></h1>
+        <p class="text-muted">Configura los accesos del sistema clínico</p>
     </div>
-}
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+    @if (TempData["PermisosGuardados"] != null)
+    {
+        <div class="alert alert-success">@TempData["PermisosGuardados"]</div>
+    }
+
+    <div class="card shadow-sm p-3">
+        <div class="mb-3">
+            <h4>Rol: <span class="text-primary">@Model.RolNombre</span></h4>
+        </div>
+
+        @using (Html.BeginForm("GuardarPermisos", "AspNetUserClaims", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.RolId)
+
+            <table class="table table-bordered align-middle">
+                <thead>
+                    <tr>
+                        <th style="width:25%">Módulo</th>
+                        <th class="text-center">Ver</th>
+                        <th class="text-center">Crear</th>
+                        <th class="text-center">Actualizar</th>
+                        <th class="text-center">Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Pacientes</strong></td>
+                        <td class="text-center">@Html.CheckBoxFor(m => m.Pacientes_Read)</td>
+                        <td class="text-center">@Html.CheckBoxFor(m => m.Pacientes_Create)</td>
+                        <td class="text-center">@Html.CheckBoxFor(m => m.Pacientes_Update)</td>
+                        <td class="text-center">@Html.CheckBoxFor(m => m.Pacientes_Delete)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Médicos</strong></td>
+                        <td class="text-center">@Html.CheckBoxFor(m => m.Medicos_Read)</td>
+                        <td class="text-center">@Html.CheckBoxFor(m => m.Medicos_Create)</td>
+                        <td class="text-center">@Html.CheckBoxFor(m => m.Medicos_Update)</td>
+                        <td class="text-center">@Html.CheckBoxFor(m => m.Medicos_Delete)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="d-flex justify-content-between">
+                <a class="btn btn-secondary" href="@Url.Action("Index")">Volver</a>
+                <button type="submit" class="btn btn-success">Guardar Cambios</button>
+            </div>
+        }
+    </div>
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
